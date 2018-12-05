@@ -1,19 +1,16 @@
 package service
 
-import "fmt"
+import (
+  "github.com/danielacarrero/Twitter/src/domain"
+)
 
-var Tweet string
+var Tweet domain.Tweet
 
 
-func PublishTweet(tweet string){
-  Tweet = tweet
-  fmt.Println(tweet);
+func PublishTweet(tweet *domain.Tweet){
+  Tweet = *tweet
 }
 
-func GetTweet() string {
-  return Tweet;
-}
-
-func main() {
-
+func GetTweet() *domain.Tweet {
+  return &Tweet;
 }
