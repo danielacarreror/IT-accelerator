@@ -10,6 +10,10 @@ func PublishTweet(tweet string){
   fmt.Println(tweet);
 }
 
+func GetTweet() string {
+  return Tweet;
+}
+
 func main() {
-  
+
 }
