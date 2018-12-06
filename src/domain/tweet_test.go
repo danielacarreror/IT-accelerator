@@ -3,10 +3,10 @@ package domain_test
 import "testing"
 import "github.com/danielacarrero/Twitter/src/domain"
 
-func TestCanGetAPrintableTweet(t *testing.T) {
+func TestTextTweetPrintsUserAndText(t *testing.T) {
 
     // Initialization
-    tweet := domain.NewTweet("grupoesfera", "This is my tweet")
+    tweet := domain.NewTextTweet("grupoesfera", "This is my tweet")
 
     // Operation
     text := tweet.PrintableTweet()

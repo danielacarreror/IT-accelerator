@@ -26,7 +26,7 @@ func main() {
 			user := "user"
 			text := c.ReadLine()
 
-			tweetManager.PublishTweet(domain.NewTweet(user, text))
+			tweetManager.PublishTweet(domain.NewTextTweet(user, text))
 
 			c.Print("Tweet sent\n")
 
