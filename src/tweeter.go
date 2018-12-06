@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/abiosoft/ishell"
 	"github.com/danielacarrero/Twitter/src/service"
 	"github.com/danielacarrero/Twitter/src/domain"
@@ -8,6 +9,7 @@ import (
 
 func main() {
 
+	tweetManager := service.NewTweetManager()
 	shell := ishell.New()
 	shell.SetPrompt("Tweeter >> ")
 	shell.Print("Type 'help' to know commands\n")
@@ -19,11 +21,12 @@ func main() {
 
 			defer c.ShowPrompt(true)
 
+
 			c.Print("Write your tweet: ")
 			user := "user"
 			text := c.ReadLine()
 
-			service.PublishTweet(domain.NewTweet(user, text))
+			tweetManager.PublishTweet(domain.NewTweet(user, text))
 
 			c.Print("Tweet sent\n")
 
@@ -32,15 +35,18 @@ func main() {
 	})
 
 	shell.AddCmd(&ishell.Cmd{
-		Name: "showTweet",
-		Help: "Shows a tweet",
+		Name: "showTweets",
+		Help: "Show all tweets",
 		Func: func(c *ishell.Context) {
 
 			defer c.ShowPrompt(true)
 
-			tweet := service.GetLastTweet()
+			tweets := tweetManager.GetTweets()
+			fmt.Println(len(tweets))
 
-			c.Println(tweet.Text)
+			for i := 0; i < len(tweets); i++{
+				c.Println(tweets[i].PrintableTweet())
+			}
 
 			return
 		},
