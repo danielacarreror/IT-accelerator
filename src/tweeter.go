@@ -38,7 +38,7 @@ func main() {
 
 			defer c.ShowPrompt(true)
 
-			tweet := service.GetTweet()
+			tweet := service.GetLastTweet()
 
 			c.Println(tweet.Text)
 
