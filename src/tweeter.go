@@ -8,7 +8,9 @@ import (
 
 func main() {
 	var user string
-	tweetManager := service.NewTweetManager()
+	var tweetWriter service.TweetWriter
+	tweetWriter = service.NewFileTweetWriter()
+	tweetManager := service.NewTweetManager(tweetWriter)
 	shell := ishell.New()
 	shell.SetPrompt("Tweeter >> ")
 	shell.Print("Type 'help' to know commands\n")

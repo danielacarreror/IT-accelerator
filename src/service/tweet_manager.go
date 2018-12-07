@@ -2,6 +2,7 @@ package service
 
 import (
   "fmt"
+  "strings"
   "github.com/danielacarrero/Twitter/src/domain"
 )
 
@@ -9,6 +10,7 @@ type TweetManager struct {
   Tweets []domain.Tweet
   lastTweet domain.Tweet
   userTweets map[string][]domain.Tweet
+  tweetWriter TweetWriter
 }
 
 /*
@@ -17,10 +19,10 @@ var lastTweet *domain.Tweet
 var userTweets map[string][]*domain.Tweet
 */
 
-func NewTweetManager() TweetManager{
+func NewTweetManager(tweetWriter TweetWriter) TweetManager{
   tweets := make([]domain.Tweet, 0)
   userTweets := make(map[string][]domain.Tweet)
-  return TweetManager{tweets, nil, userTweets}
+  return TweetManager{tweets, nil, userTweets, tweetWriter}
 }
 
 func (tm *TweetManager) PublishTweet(tweet domain.Tweet) (int, error){
@@ -52,6 +54,8 @@ func (tm *TweetManager) PublishTweet(tweet domain.Tweet) (int, error){
 
   tm.Tweets = append(tm.Tweets, tweet)
   tm.lastTweet = tweet
+
+  tm.tweetWriter.WriteTweet(tweet)
 
   return tweet.GetId(), nil
 }
@@ -90,4 +94,14 @@ func (tm *TweetManager) GetTweetsByUser(user string) []domain.Tweet{
     }
   }
   return nil
+}
+
+func (tm *TweetManager) SearchTweetsContaining(query string, searchResult chan domain.Tweet){
+  go func() {
+    for _, tweet := range tm.Tweets{
+      if strings.Contains(tweet.GetText(), query){
+        searchResult <- tweet
+      }
+    }
+  }()
 }

@@ -13,7 +13,7 @@ func NewImageTweet(user string, text string, url string) *ImageTweet {
 }
 
 func (tweet *ImageTweet) PrintableTweet() string {
-  return "@" + tweet.textTweet.User + ": " + tweet.textTweet.Text + "\n" + tweet.urlImg
+  return "@" + tweet.textTweet.User + ": " + tweet.textTweet.Text + "\t" + tweet.urlImg
 }
 
 func (tweet *ImageTweet) GetText() string{

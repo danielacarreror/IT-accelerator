@@ -64,7 +64,7 @@ func TestImageTweetPrintsUserTextAndImageURL(t *testing.T) {
     // Operation
     text := tweet.PrintableTweet()
     // Validation
-    expectedText := "@grupoesfera: This is my image\nhttp://www.grupoesfera.com.ar/common/img/grupoesfera.png"
+    expectedText := "@grupoesfera: This is my image\thttp://www.grupoesfera.com.ar/common/img/grupoesfera.png"
     if text != expectedText {
       t.Errorf("The expected text is %s but was %s", expectedText, text)
     }
