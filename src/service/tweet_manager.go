@@ -34,14 +34,14 @@ func (tm *TweetManager) PublishTweet(tweet domain.Tweet) (int, error){
     return 0, fmt.Errorf("tweet exceeding 140 characters")
   }
 
-  switch v:= tweet.(type) {
-    case TextTweet:
-    case ImageTweet:
-      if tweet.GetUrlImg() == "" {
+  switch castedTweet := tweet.(type) {
+    case *domain.TextTweet:
+    case *domain.ImageTweet:
+      if castedTweet.GetUrlImg() == "" {
         return 0, fmt.Errorf("Image tweet without url image")
       }
-    case QuoteTweet:
-      if tweet.QuotedTweet == nil {
+    case *domain.QuoteTweet:
+      if castedTweet.QuotedTweet == nil {
         return 0, fmt.Errorf("QuoteTweet without a quote")
       }
   }
